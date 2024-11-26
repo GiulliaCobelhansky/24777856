@@ -1,0 +1,379 @@
+//1 Exercícios - while e Do-while
+//Exercício 1:
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    float temperatura;
+    int continuar = 1;
+
+    while (continuar) {
+        printf("Digite a temperatura atual (em °C): ");
+        scanf("%f", &temperatura);
+
+        if (temperatura < 20.0 || temperatura > 25.0) {
+            printf("ALERTA: Temperatura fora do intervalo seguro! (%.2f°C)\n", temperatura);
+        } else {
+            printf("Temperatura dentro do intervalo seguro. (%.2f°C)\n", temperatura);
+        }
+
+        printf("Deseja continuar monitorando? (1 - Sim / 0 - Não): ");
+        scanf("%d", &continuar);
+    }
+
+    return 0;
+Exercício 2:
+#include <stdio.h>
+
+int main() {
+    float nivelCombustivel;
+
+    do {
+        printf("Digite o nivel de combustivel atual (em %%): ");
+        scanf("%f", &nivelCombustivel);
+
+        if (nivelCombustivel < 15.0) {
+            printf("ALERTA: Nivel de combustível baixo (%.2f%%). Recarregue o veiculo!\n", nivelCombustivel);
+        } else if (nivelCombustivel < 100.0) {
+            printf("Nível de combustivel suficiente: %.2f%%\n", nivelCombustivel);
+        }
+
+    } while (nivelCombustivel < 100.0);
+
+    printf("Carregamento completo! Nível de combustivel: %.2f%%\n", nivelCombustivel);
+
+    return 0;
+}
+Exercício 3:
+#include <stdio.h>
+
+int main() {
+    int passos, totalPassos = 0;
+
+    printf("Meta diaria: 10.000 passos\n");
+
+    do {
+        printf("Digite o numero de passos dados: ");
+        scanf("%d", &passos);
+
+        if (passos > 0) {
+            totalPassos += passos;
+            printf("Total de passos ate agora: %d\n", totalPassos);
+        } else {
+            printf("Numero de passos invalido. Tente novamente.\n");
+        }
+
+    } while (totalPassos < 10000);
+
+    printf("Parabens! Voce alcancou a meta diaria de 10.000 passos com um total de %d passos!\n", totalPassos);
+
+    return 0;
+}
+Exercício 4:
+#include <stdio.h>
+
+int main() {
+    float deposito;
+
+    printf("Bem-vindo ao sistema bancario.\n");
+    printf("O valor minimo para abrir uma conta e R$ 500,00.\n");
+
+    do {
+        printf("Digite o valor do deposito inicial: R$ ");
+        scanf("%f", &deposito);
+
+        if (deposito < 500.0) {
+            printf("Erro: O valor minimo e R$ 500,00. Tente novamente.\n");
+        }
+    } while (deposito < 500.0);
+
+    printf("Deposito valido! Conta aberta com sucesso. Valor depositado: R$ %.2f\n", deposito);
+
+    return 0;
+}
+Desafio
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+void coletarPrecos(float precos[], int dias) {
+    for (int i = 0; i < dias; i++) {
+        printf("Digite o preco da acao no dia %d: ", i + 1);
+        scanf("%f", &precos[i]);
+    }
+}
+
+float calcularMedia(float precos[], int dias) {
+    float soma = 0.0;
+    for (int i = 0; i < dias; i++) {
+        soma += precos[i];
+    }
+    return soma / dias;
+}
+
+float calcularDesvioPadrao(float precos[], int dias, float media) {
+    float somaQuadrados = 0.0;
+    for (int i = 0; i < dias; i++) {
+        somaQuadrados += pow(precos[i] - media, 2);
+    }
+    return sqrt(somaQuadrados / dias);
+}
+
+int main() {
+    int dias, opcao;
+    do {
+        printf("Quantos dias deseja analisar? ");
+        scanf("%d", &dias);
+
+        if (dias <= 0) {
+            printf("Erro: O numero de dias deve ser maior que zero.\n");
+            continue;
+        }
+
+        float *precos = (float *)malloc(dias * sizeof(float));
+        if (precos == NULL) {
+            printf("Erro: Falha ao alocar memoria.\n");
+            return 1;
+        }
+
+        coletarPrecos(precos, dias);
+
+        float media = calcularMedia(precos, dias);
+        float desvioPadrao = calcularDesvioPadrao(precos, dias, media);
+
+        printf("\nMedia do preco das acoes: %.2f\n", media);
+        printf("Desvio padrao: %.2f\n", desvioPadrao);
+
+        if (desvioPadrao < 5.0) {
+            printf("Desempenho: Estavel\n");
+        } else {
+            printf("Desempenho: Volatil\n");
+        }
+
+        free(precos);
+
+        printf("\nDeseja analisar novos dados? (1 - Sim / 0 - Nao): ");
+        scanf("%d", &opcao);
+
+    } while (opcao == 1);
+
+    printf("Programa encerrado.\n");
+    return 0;
+}
+//2. Exercicios - Do while
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+    // Exercicio 1
+    int x = 5, y = 5;
+    char comando1[10];
+    do {
+        scanf("%s", comando1);
+        if (strcmp(comando1, "frente") == 0 && y < 10) y++;
+        else if (strcmp(comando1, "tras") == 0 && y > 0) y--;
+        else if (strcmp(comando1, "esquerda") == 0 && x > 0) x--;
+        else if (strcmp(comando1, "direita") == 0 && x < 10) x++;
+        printf("Posicao: (%d, %d)\n", x, y);
+    } while (strcmp(comando1, "sair") != 0);
+
+    // Exercicio 2
+    float distancia;
+    char opcao2;
+    do {
+        do {
+            scanf("%f", &distancia);
+            if (distancia < 10.0) break;
+            printf("Distancia: %.2f cm\n", distancia);
+        } while (1);
+        scanf(" %c", &opcao2);
+    } while (opcao2 == 's');
+
+    // Exercicio 3
+    int opcao3;
+    do {
+        scanf("%d", &opcao3);
+        if (opcao3 == 1) printf("Lampada ligada.\n");
+        else if (opcao3 == 2) printf("Som tocando.\n");
+        else if (opcao3 == 3) printf("Braco movido.\n");
+    } while (opcao3 != 4);
+
+    // Exercicio 4
+    float nivelBateria;
+    do {
+        scanf("%f", &nivelBateria);
+        if (nivelBateria < 20.0) printf("Bateria baixa: %.2f%%\n", nivelBateria);
+    } while (nivelBateria < 20.0);
+
+    // Exercicio 5
+    int x5 = 2, y5 = 2;
+    char comando5[10];
+    do {
+        scanf("%s", comando5);
+        if (strcmp(comando5, "cima") == 0 && y5 > 0) y5--;
+        else if (strcmp(comando5, "baixo") == 0 && y5 < 4) y5++;
+        else if (strcmp(comando5, "esquerda") == 0 && x5 > 0) x5--;
+        else if (strcmp(comando5, "direita") == 0 && x5 < 4) x5++;
+        printf("Posicao: (%d, %d)\n", x5, y5);
+    } while (strcmp(comando5, "parar") != 0);
+
+    return 0;
+}
+//2.1 Desafio
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
+int main() {
+    int x = 5, y = 5, opcao, opcao_movimento;
+    float distancia, nivelBateria;
+    char comando[10];
+
+    do {
+        printf("\nEscolha uma funcionalidade:\n");
+        printf("1. Controle de Movimento\n");
+        printf("2. Leitura de Sensores de Distancia\n");
+        printf("3. Controle de Atuacao\n");
+        printf("4. Monitoramento de Bateria\n");
+        printf("5. Navegacao em Grid\n");
+        printf("6. Sair\n");
+        printf("Opcao: ");
+        scanf("%d", &opcao);
+
+        if (opcao == 1) { 
+            printf("Controle de Movimento - Comandos: frente, tras, esquerda, direita, sair\n");
+            do {
+                scanf("%s", comando);
+                if (strcmp(comando, "frente") == 0 && y < 10) y++;
+                else if (strcmp(comando, "tras") == 0 && y > 0) y--;
+                else if (strcmp(comando, "esquerda") == 0 && x > 0) x--;
+                else if (strcmp(comando, "direita") == 0 && x < 10) x++;
+                printf("Posicao: (%d, %d)\n", x, y);
+            } while (strcmp(comando, "sair") != 0);
+        }
+
+        else if (opcao == 2) {
+            printf("Leitura de Sensores de Distancia\n");
+            do {
+                printf("Digite a distancia medida (em cm): ");
+                scanf("%f", &distancia);
+                if (distancia < 10.0) break;
+                printf("Distancia: %.2f cm\n", distancia);
+            } while (distancia >= 10.0);
+        }
+
+        else if (opcao == 3) {
+            printf("Controle de Atuacao\n");
+            do {
+                printf("Escolha uma acao: 1. Ligar lampada, 2. Tocar som, 3. Mover braco, 4. Sair\n");
+                scanf("%d", &opcao_movimento);
+                if (opcao_movimento == 1) printf("Lampada ligada.\n");
+                else if (opcao_movimento == 2) printf("Som tocando.\n");
+                else if (opcao_movimento == 3) printf("Braco movido.\n");
+            } while (opcao_movimento != 4);
+        }
+
+        else if (opcao == 4) {
+            printf("Monitoramento de Bateria\n");
+            do {
+                printf("Digite o nivel da bateria (em %%): ");
+                scanf("%f", &nivelBateria);
+                if (nivelBateria < 20.0) printf("Bateria baixa: %.2f%%\n", nivelBateria);
+            } while (nivelBateria < 20.0);
+        }
+
+        else if (opcao == 5) {
+            printf("Navegacao em Grid (5x5)\n");
+            int x_grid = 2, y_grid = 2;
+            do {
+                printf("Digite o comando (cima, baixo, esquerda, direita, parar): ");
+                scanf("%s", comando);
+                if (strcmp(comando, "cima") == 0 && y_grid > 0) y_grid--;
+                else if (strcmp(comando, "baixo") == 0 && y_grid < 4) y_grid++;
+                else if (strcmp(comando, "esquerda") == 0 && x_grid > 0) x_grid--;
+                else if (strcmp(comando, "direita") == 0 && x_grid < 4) x_grid++;
+                printf("Posicao no grid: (%d, %d)\n", x_grid, y_grid);
+            } while (strcmp(comando, "parar") != 0);
+        }
+
+    } while (opcao != 6);
+
+    printf("Programa encerrado.\n");
+    return 0;
+}
+//3 Exercícios práticos usando Arduino e conceitos de estrutura de re-
+petição
+//1. int cameraData[10];
+//2. Ler o valor analogico do pino A1 e armazenar o valor obtido
+//3.float temperaturas[5] = {25.5, 26.0, 24.8, 27.3, 26.5};
+//4.for (int i = 0; i < 4; i++) {
+    Serial.println(ledPins[i]);
+}
+//5.int ledPins[4] = {3, 5, 6, 9};
+
+void setup() {
+    Serial.begin(9600);
+    for (int i = 0; i < 4; i++) {
+        Serial.println(ledPins[i]);
+    }
+}
+
+void loop() {
+}
+//6.int randomValues[5];
+for (int i = 0; i < 5; i++) {
+    randomValues[i] = random(0, 100); // Atribui valores aleatórios entre 0 e 99
+}
+//7.for (int i = 0; i < tamanhoVetor; i++) {
+    if (sensorReadings[i] == 150) {
+        break;
+    }
+}
+//8.
+Essa expressão calcula o número de elementos no vetor sensorData.
+sizeof(sensorData) retorna o tamanho total do vetor em bytes.
+sizeof(sensorData[0]) retorna o tamanho de um único elemento em bytes.
+Dividindo o total pelo tamanho de um elemento, obtemos o número de elementos do vetor.
+
+//4. Problemas
+//a.
+22°C, 25°C, 23°C, 21°C, 24°C.
+//b.
+
+45%, 38%, 42%, 40%, 37%.
+A média é 40,4%.
+
+//c.
+
+400 ppm, 380 ppm, 420 ppm, 410 ppm, 390 ppm.
+
+//d.
+int ambientData[3][5] = {
+    {22, 25, 23, 21, 24},  
+    {45, 38, 42, 40, 37},  
+    {400, 380, 420, 410, 390}  
+};
+
+int totalLocais = 3;
+int totalLeituras = 5;
+int somaTemperaturas = 0;
+
+void setup() {
+    Serial.begin(9600);
+
+    for (int i = 0; i < totalLocais; i++) {
+        for (int j = 0; j < totalLeituras; j++) {
+            somaTemperaturas += ambientData[i][j];
+        }
+    }
+
+    int mediaTemperatura = somaTemperaturas / (totalLocais * totalLeituras);
+
+    Serial.print("Media temperatura: ");
+    Serial.println(mediaTemperatura);
+}
+
+void loop() {
+}
